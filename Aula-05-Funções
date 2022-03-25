@@ -1,0 +1,276 @@
+# Exercícios Aula 05 - Funções
+# Programação em PYTHON
+#_________________________________________________________________
+# QUESTÃO 1
+  '''Crie um programa que receba um valor inteiro e avalie se ele 
+  é positivo ou negativo. Essa avaliação deve ocorrer dentro de uma 
+  função que retorna um valor booleano.'''
+  
+  # SOLUÇÃO
+  #---Função ispositive---
+  def ispositive(var1:float):
+    if var1 < 0:
+      return 0 # zero se negativo
+    else:
+      return 1 # um se positivo
+  #-----------------------
+
+  A = float(input('Digite um número: '))
+  B = ispositive(A)
+  print(B)
+#_________________________________________________________________
+# QUESTÃO 2
+  '''Crie um programa que tenha uma função que receba uma lista de 
+  números inteiros e exiba todos os valores multiplicados por um 
+  valor inserido pelo usuário.'''
+  
+  # SOLUÇÃO
+  #---Função multlist---
+  def multlist(var1:float,var2:float):
+    for i in list(range(len(var1))):
+      var1[i] = var1[i] * var2 
+    return var1
+  #---------------------
+
+  A = [1,2,3,4]
+  B = 3
+
+  print(multlist(A,B))
+#_________________________________________________________________
+# QUESTÃO 3
+  '''Crie um programa que possua uma lista de nomes. Peça que o 
+  usuário insira um nome que será buscado nesta lista. A busca deve
+  ser implementada em uma função que retorna os valores lógicos
+  verdadeiro ou falso.'''
+  
+  # SOLUÇÃO
+  #---Função procnome---
+  def procnome(var1:str,var2:str):
+    chk = list(range(len(var1)))
+    for i in range(len(var1)):
+      if var1[i] == var2:
+        chk[i] = 1
+      else:
+        chk[i] = 0
+    if chk.count(1) >= 1:
+      return True
+    else: 
+      return False
+  #---------------------
+  nomes = ['Danilo','Rudrigues','Almeida','Lira']
+  busca1 = 'Rudrigues'
+  busca2 = 'Flávia'
+
+  print(procnome(nomes,busca1))
+  print(procnome(nomes,busca2))
+#_________________________________________________________________
+# QUESTÃO 4
+  '''Implemente um programa que possa receber do usuário a 
+  temperatura em graus Celsius ou Fahrenheit. Antes de receber 
+  a temperatura, pergunte ao usuário se ele deseja inserir em 
+  Celsius ou em Fahrenheit. Se a entrada for em graus Celsius, 
+  o programa deverá retornar a temperatura em Fahrenheit. Se a 
+  entrada for em Fahrenheit, o programa deverá retornar a 
+  temperatura em Celsius. F = C x 1,8 + 32'''
+  
+  # SOLUÇÃO
+  #---Função tempcffc---
+  def tempcffc(temp:float,unid:str):
+    if unid == 'c' or unid == 'C':
+      print('A temperatura em Fahrenheit é: ')
+      return temp * 1.8 + 32
+    elif unid == 'f' or unid == 'F':
+      print('A temperatura em Celsius é: ')
+      return (temp - 32) / 1.8
+    else:
+      return ValueError
+  #---------------------
+
+  vtem = float(input('Digite a temperatura: '))
+  vuni = str(input('Digite "C" se a temperatura está em Celsius ou "F" se estiver em Fahrenheit: '))
+
+  print()
+  print(tempcffc(vtem,vuni))
+#_________________________________________________________________
+# QUESTÃO 5
+  '''Crie um programa que receba do usuário 5 números inteiros e 
+  os exiba na tela na ordem contrária a que foi inserido. A leitura 
+  dos números deve ser feita em uma função e a exibição dos valores 
+  em ordem contrária deve ocorrer em outra função.'''
+  
+  # SOLUÇÃO
+  #---Função leitura5---
+  def leitura5():
+    a = [0]*5
+    for i in range(5):
+      print('Digite o',i+1,'° número: ')
+      a[i] = float(input())
+    return a
+  #--------------------
+
+  #---Função ordcont---
+  def ordcont(var1):
+    var2 = var1[::-1]
+    return var2
+  #--------------------
+
+  k = leitura5()
+  print(k)
+  print()
+  kk = ordcont(k)
+  print(kk)
+#_________________________________________________________________
+# QUESTÃO 6
+  '''Crie um programa que tenha uma função que receba uma lista de 
+  números inteiros e exiba todos os seus valores em ordem invertida.
+  Obs.: Sem usar invert ou o fatiador com passo -1.'''
+  
+  # SOLUÇÃO
+  #---Função ordinv---
+  def ordinv(var1):
+    var2 = [0]*len(var1)
+    for n in range(len(var1)):
+      u = len(var1) - n -1
+      var2[n] = var1[u]
+    return var2
+  #-------------------
+
+  indo = [1,10,100,1000]
+  print(indo)
+  print()
+  voltando = ordinv(indo)
+  print(voltando)
+#_________________________________________________________________
+# QUESTÃO 7
+  '''Faça um programa para imprimir:
+    1
+    2   2
+    3   3   3
+    .....
+    n   n   n   n   n   n  ... n'''
+  
+  # SOLUÇÃO
+  #---Função triang---
+  def triang(n):
+    for i in range(n):
+      ii = i + 1
+      var1 = [ii]*ii
+      for j in range(len(var1)):
+        print(var1[j],end='   ')
+      print()
+  #-------------------
+
+  triang(5)
+#_________________________________________________________________
+# QUESTÃO 8
+  '''Faça um programa para imprimir:
+    1
+    1   2
+    1   2   3
+    .....
+    1   2   3   ...  n'''
+  
+  # SOLUÇÃO
+  #---Função triang2---
+  def triang2(n):
+    n += 1
+    for i in range(n):
+      ii = i + 1
+      var1 = list(range(ii))
+      var1.pop(0)
+      for j in range(len(var1)):
+        print(var1[j],end='   ')
+      print()
+  #-------------------
+
+  triang2(5)
+#_________________________________________________________________
+# QUESTÃO 9
+  '''Faça uma função que receba um valor inteiro e positivo e 
+  calcule o seu fatorial.'''
+  
+  # SOLUÇÃO
+  #---Função fatorial---
+  def fatorial(n):
+    var1 = list(range(n+1))
+    var1.pop(0)
+    var1 = var1[::-1]
+    fat = 1
+    for i in range(n):
+      fat *= var1[i]
+    return fat
+  #---------------------
+
+  A = fatorial(5)
+  print(A)
+#_________________________________________________________________
+# QUESTÃO 10
+  '''Faça um programa com uma função chamada somaImposto. A função 
+  possui dois parâmetros formais: taxaImposto, que é a quantia de 
+  imposto sobre vendas expressa em porcentagem e custo, que é o 
+  custo de um item antes do imposto. A função “altera” o valor de 
+  custo para incluir o imposto sobre vendas.'''
+  
+  # SOLUÇÃO
+  #---Função somaimposto---
+  def somaimposto(taxa:float,custo:float):
+    venda = (1+(taxa/100)) * custo
+    return venda
+  #------------------------
+
+  aliquota = 27.5
+  preço = 6841.41
+
+  preço_final = somaimposto(aliquota,preço)
+  print(preço_final)    
+#_________________________________________________________________
+# QUESTÃO 11
+  '''Um palíndromo é uma palavra que se soletra da mesma forma nos
+  dois sentidos, como “osso” e “reviver”. Escreva um função que 
+  dado uma plavra verifique se ela é palindro.'''
+  
+  # SOLUÇÃO
+  #---Função ispalindromo---
+  def ispalindromo(palavra:str):
+    pal = ''
+    for n in range(len(palavra)):
+      u = len(palavra) - n - 1 
+      pal += palavra[u]
+    if pal == palavra:
+      print('A palavra',palavra,'é um palíndromo')
+    else:
+      print('A palavra',palavra,'NÃO é um palíndromo')
+  #-------------------------
+
+  A = 'osso'
+  B = 'Banana'
+
+  ispalindromo(A)
+  print()
+  ispalindromo(B)
+#_________________________________________________________________
+# QUESTÃO 12
+  '''Construa uma função que receba uma string como parâmetro e 
+  devolva outra string com os carateres embaralhados. Por exemplo: 
+  se função receber a palavra python, pode retornar npthyo, ophtyn 
+  ou qualquer outra combinação possível, de forma aleatória.
+  Padronize em sua função que todos os caracteres serão devolvidos 
+  em caixa alta ou caixa baixa, independentemente de como foram 
+  digitados.'''
+  
+  # SOLUÇÃO
+  # Para pesquisa, veja a biblioteca random
+  #---Função bagunca---
+  def bagunca(var1:str):
+    import random
+    var1 = random.sample(var1, len(var1))
+    var2 = ''
+    for i in range(len(var1)):
+      var2 += var1[i]
+    var2 = var2.upper()
+    return var2
+  #--------------------
+
+  A = 'danilo'
+
+  print(bagunca(A))
