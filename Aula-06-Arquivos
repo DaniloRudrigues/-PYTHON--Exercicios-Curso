@@ -1,0 +1,255 @@
+# Exercícios Aula 06 - Arquivos
+# Programação em PYTHON
+#_________________________________________________________________
+# QUESTÃO 1
+  '''Aumente a lista de heróis no arquivo novo_arquivo.txt. Feito 
+  isso, crie um programa que leia esse arquivo e crie dois novos 
+  arquivos:
+  Um arquivo apenas com heróis da Marvel;
+  Outro apenas com heróis da DC.'''
+  
+  # SOLUÇÃO
+  arquivo = open('novo_arquivo.txt','x')
+  arquivo = open('novo_arquivo.txt','w')
+  arquivo.write('Batman - DC\n')
+  arquivo.write('Supermam - DC\n')
+  arquivo.write('Flash - DC\n')
+  arquivo.write('Thor - Marvel\n')
+  arquivo.write('Homem-Aranha - Marvel\n')
+  arquivo.write('Homem-Formiga - Marvel\n')
+  arquivo.close()
+
+  arquivo2 = open('novo_arquivo2.txt','x')
+  arquivo2 = open('novo_arquivo2.txt','w')
+  arquivo2.write('Thor - Marvel\n')
+  arquivo2.write('Homem-Aranha - Marvel\n')
+  arquivo2.write('Homem-Formiga - Marvel\n')
+  arquivo2.close()
+
+  arquivo3 = open('novo_arquivo3.txt','x')
+  arquivo3 = open('novo_arquivo3.txt','w')
+  arquivo3.write('Batman - DC\n')
+  arquivo3.write('Supermam - DC\n')
+  arquivo3.write('Flash - DC\n')
+  arquivo3.close()
+#_________________________________________________________________
+# QUESTÃO 2
+  '''Crie um programa que registra as notas de uma pessoa na escola
+  (como o boletim) em um arquivo. Em seguida, leia todos os valores
+  para imprimir o menor valor, o maior e a média.
+  Dica: Se você usar listas, pode usar as funções min() e max().'''
+  
+  # SOLUÇÃO
+  arq = open('notas.txt','x')
+  arq.write('8.58\n')
+  arq.write('9.98')
+  arq.close()
+
+  arq2 = open('notas.txt','r')
+  notas = arq2.read()
+  arq2.close()
+
+  A = notas.split('\n')
+  for i in range(len(A)):
+    A[i] = float(A[i])
+
+  print('O maior valor é:',max(A))
+  print('O menor valor é:',min(A))
+  import statistics
+  print('A média das notas é:',round(statistics.mean(A),2))
+#_________________________________________________________________
+# QUESTÃO 3
+  '''Faça um programa que leia um arquivo texto contendo uma lista 
+  de endereços IP e gere um outro arquivo, contendo um relatório 
+  dos endereços IP válidos e inválidos.
+  Será considerado um IP válido quando nenhuma de suas partes 
+  ultrapassar o valor de 255.
+
+  O arquivo de entrada possui o seguinte formato:
+
+        200.135.80.9
+        192.168.1.1
+        8.35.67.74
+        257.32.4.5
+        85.345.1.2
+        1.2.3.4
+        9.8.234.5
+        192.168.0.256
+  O arquivo de saída possui o seguinte formato:
+
+      [Endereços válidos:]
+      200.135.80.9
+      192.168.1.1
+      8.35.67.74
+      1.2.3.4
+      9.8.234.5
+
+      [Endereços inválidos:]
+      257.32.4.5
+      85.345.1.2
+
+      192.168.0.256'''
+  
+  # SOLUÇÃO
+  #-- Criação do Arquivo original---
+
+  arq = open('ip_original.txt','x')
+  arq = open('ip_original.txt','w')
+  arq.write('200.135.80.9\n\
+  192.168.1.1\n\
+  8.35.67.74\n\
+  257.32.4.5\n\
+  85.345.1.2\n\
+  1.2.3.4\n\
+  9.8.234.5\n\
+  192.168.0.256')
+  arq.close()
+  #-----------------------------------
+
+  aaa = open('ip_original.txt','r')
+  var1 = aaa.read()
+  aaa.close()
+  '''Criando matriz - var1'''
+  var2 = var1.split('\n')
+  var3 = var2
+  for i in range(len(var3)):
+    var3[i] = var3[i].split('.')
+
+  '''Verificação dos IP's'''
+  '''A variável iden guarda valores "0" para posições da linha que contem IP's 
+  válidos e guarda outros valores para IP's errados'''
+  iden = [0]*len(var3)
+  for i in range(len(var3)):
+    for j in range(len(var3[i])):
+      if int(var3[i][j]) <= 255:
+        continue
+      else:
+        iden[i] = i
+        break  
+
+  '''Montagem do novo txt'''
+  arq2 = open('ip_rank.txt','x')
+  '''alocação dos IP's válidos '''
+  var2 = var1.split('\n')
+  arq2.write('[Endereços válidos:]\n')
+  for i in range(len(iden)):
+    if iden[i] == 0:
+      arq2.write(var2[i])
+      arq2.write('\n')
+
+  arq2.write('\n')
+  arq2.write('[Endereços inválidos:]\n')
+  for i in range(len(iden)):
+    if iden[i] != 0:
+      arq2.write(var2[i])
+      arq2.write('\n')
+  arq2.close()
+#_________________________________________________________________
+# QUESTÃO 4
+  '''A ACME Inc., uma empresa de 500 funcionários, está tendo 
+  problemas de espaço em disco no seu servidor de arquivos. 
+  Para tentar resolver este problema, o Administrador de Rede precisa
+  saber qual o espaço ocupado pelos usuários, e identificar os 
+  usuários com maior espaço ocupado. Através de um programa, baixado
+  da Internet, ele conseguiu gerar o seguinte arquivo, com o nome 
+  dos usuários e seus repectivos consumos em Bytes chamado 
+  "usuarios.txt":
+
+   alexandre       456123789
+   anderson        1245698456
+   antonio         123456456
+   carlos          91257581
+   cesar           987458
+   rosemary        789456125
+  Neste arquivo, o nome do usuário possui 15 caracteres. A partir
+  deste arquivo, você deve criar um programa que gere um relatório,
+  chamado "relatório.txt", no seguinte formato:
+
+  ACME Inc.       Uso do espaço em disco pelos usuários
+
+  Nr.  Usuário        Espaço utilizado     % do uso
+
+   1    alexandre       434,99 MB             16,85%
+   2    anderson       1187,99 MB             46,02%
+   3    antonio         117,73 MB              4,56%
+   4    carlos           87,03 MB              3,37%
+   5    cesar             0,94 MB              0,04%
+   6    rosemary        752,88 MB             29,16%
+
+   Espaço total ocupado: 2581,57 MB
+   Espaço médio ocupado: 430,26 MB
+   
+   O arquivo de entrada deve ser lido uma única vez, e os dados 
+   armazenados em memória, caso sejam necessários, de forma a 
+   agilizar a execução do programa. A conversão da espaço ocupado 
+   em disco, de bytes para megabytes deverá ser feita através de 
+   uma função separada, que será chamada pelo programa principal. 
+   O cálculo do percentual de uso também deverá ser feito através 
+   de uma função, que será chamada pelo programa principal.'''
+  
+  # SOLUÇÃO
+  
+  #---CRIAÇÃO DO ARQUIVO "usuario.txt"-----
+  arq = open('usuarios.txt','x')
+  arq.write('alexandre       456123789\n')
+  arq.write('anderson        1245698456\n')
+  arq.write('antonio         123456456\n')
+  arq.write('carlos          91257581\n')
+  arq.write('cesar           987458\n')
+  arq.write('rosemary        789456125')
+  arq.close()
+  '''Arquivo já criado'''
+  #----------------------------------------
+  #============xx===========xx=========xx=========xx========
+  #---FUNÇÃO  btomb------------------------
+  def btomb(bytes:float):
+  #1B=9.5367×10-7 MB
+    MB = round(9.5367*10**-7 * bytes,2)
+    MB = str(MB)+' MB'
+    MB = MB.replace('.',',')
+    if len(MB) < 10:
+      MB = ' '*(10-len(MB))+MB
+    return MB
+  #----------------------------------------
+
+  #---FUNÇÃO peruso------------------------
+  def peruso(tamanho:float,total:float):
+    per = round((tamanho / total) * 100,2)
+    k = str(per)+'%'
+    k1 = k.replace('.',',')
+    if len(k1) < 6:
+      k1 = ' '*(6-len(k1))+k1
+    return k1
+  #----------------------------------------
+  #============xx===========xx=========xx=========xx========
+
+  #---RECUPERAÇÃO DE DADOS DO 'usuarios.txt'---
+  aaa = open('usuarios.txt','r')
+  usu = aaa.read()
+  aaa.close()
+  usu1 = usu.split('\n')
+  usu2 = [0]*len(usu1)
+  for i in range(len(usu1)):
+    usu2[i] = usu1[i].split(' ')
+  nome = [0]*len(usu2)
+  btes = [0]*len(usu2)
+  for i in range(len(usu2)):
+      nome[i] = usu2[i][0]
+      k = len(usu2[i])-1
+      btes[i] = float(usu2[i][k])
+  #--------------------------------------------
+
+  #---CRIAÇÃO DO ARQUIVO "relatório.txt"-------
+  bbb = open("relatório.txt",'x')
+  bbb.write('ACME Inc.       Uso do espaço em disco pelos usuários\n')
+  bbb.write('\n')
+  bbb.write('Nr.  Usuário        Espaço utilizado     % do uso\n')
+  bbb.write('\n')
+  t = sum(btes)
+  for i in range(len(nome)):
+    bbb.write(str(i+1)+'    '+nome[i]+' '*(15-len(nome[i]))+btomb(btes[i])+' '*13+peruso(btes[i],t)+'\n')
+  bbb.write('\n')  
+  bbb.write('Espaço total ocupado: '+btomb(t)+'\n')
+  bbb.write('Espaço médio ocupado: '+btomb(t/len(nome))+'\n')
+  bbb.close()
+  #--------------------------------------------
